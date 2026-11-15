@@ -16,8 +16,7 @@ jobs:
 
       - name: Clone Skyward Source
         run: |
-          # Ana Skyward deposunun URL'sini buraya yaz (veya kendi forkunu)
-          git clone https://github.com/Team-Skyward/skyward.git skyward-src
+          git clone https://github.com/GERCEK_KULLANICI/skyward.git skyward-src
 
       - name: Install Rust & aarch64 Target
         uses: dtolnay/rust-toolchain@stable
