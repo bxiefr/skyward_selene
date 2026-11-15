@@ -9,8 +9,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Device Repo (skyward_selene)
         uses: actions/checkout@v4
+        with:
+          path: device-tree
+
+      - name: Clone Skyward Source
+        run: |
+          # Ana Skyward deposunun URL'sini buraya yaz (veya kendi forkunu)
+          git clone https://github.com/Team-Skyward/skyward.git skyward-src
 
       - name: Install Rust & aarch64 Target
         uses: dtolnay/rust-toolchain@stable
@@ -27,10 +34,12 @@ jobs:
           add-to-path: true
 
       - name: Build Skyward Binary
+        working-directory: skyward-src
         run: |
           cargo ndk -t arm64-v8a --platform 30 build --release -p skyward
 
       - name: Build Skyward Packager
+        working-directory: skyward-src
         run: |
           cargo build --release -p skyward-pack
 
@@ -41,10 +50,10 @@ jobs:
 
       - name: Package Skyward Image
         run: |
-          ./target/release/skyward-pack boot \
+          ./skyward-src/target/release/skyward-pack boot \
             --stock stock_boot.img \
-            --binary target/aarch64-linux-android/release/skyward \
-            --config devices/selene.toml \
+            --binary skyward-src/target/aarch64-linux-android/release/skyward \
+            --config device-tree/devices/selene.toml \
             --out skyward-selene.img
 
       - name: Upload Artifacts
