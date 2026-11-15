@@ -1,0 +1,24 @@
+[device]
+name = "Redmi 10 2022"
+codename = "selene"
+arch = "arm64"
+ab_device = true
+
+[display]
+width = 1080
+height = 2400
+dpi = 400
+# MediaTek DRM/FB düğümü (stokta genelde fb0 veya card0)
+framebuffer = "/dev/graphics/fb0"
+
+[touch]
+# Config'de CONFIG_TOUCHSCREEN_FTS_XIAOMI=y gördük (FocalTech)
+device_name = "fts_ts"
+invert_x = false
+invert_y = false
+
+[partitions]
+boot = "/dev/block/by-name/boot"
+super = "/dev/block/by-name/super"
+userdata = "/dev/block/by-name/userdata"
+metadata = "/dev/block/by-name/metadata"
