@@ -34,15 +34,15 @@ jobs:
         run: |
           cargo build --release -p skyward-pack
 
-      - name: Download Stock Recovery (Selene)
+      - name: Download Stock Boot (Selene)
         run: |
-          # Stok imajı kendi hostinginden veya ham ROM linkinden çekiyoruz
-          curl -L -o stock_recovery.img "https://ornek-link.com/selene_stock_recovery.img"
+          curl -L -f -o stock_boot.img "https://github.com/bxiefr/skyward_selene/releases/download/selene/13.0.8.0.SKUMIXM_boot.img"
+          ls -lh stock_boot.img
 
       - name: Package Skyward Image
         run: |
           ./target/release/skyward-pack boot \
-            --stock stock_recovery.img \
+            --stock stock_boot.img \
             --binary target/aarch64-linux-android/release/skyward \
             --config devices/selene.toml \
             --out skyward-selene.img
